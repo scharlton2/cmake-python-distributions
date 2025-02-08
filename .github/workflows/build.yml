@@ -117,6 +117,12 @@ jobs:
 
       - uses: yezz123/setup-uv@v4
 
+      - name: Clean docker images
+        if: matrix.use_qemu && fromJSON(env.USE_QEMU)
+        run: |
+          docker system prune -a -f
+          df -h
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3.3.0
         if: matrix.use_qemu && fromJSON(env.USE_QEMU)
